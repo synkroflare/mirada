@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.companyRoutes = void 0;
+const express_1 = require("express");
+const CreateCompanyController_1 = require("../../server/modules/company/CreateCompanyController");
+const ReadCompanyController_1 = require("../../server/modules/company/ReadCompanyController");
+const UpdateCompanyController_1 = require("../../server/modules/company/UpdateCompanyController");
+const ListCompanyController_1 = require("../../server/modules/company/ListCompanyController");
+const readCompanyController = new ReadCompanyController_1.ReadCompanyController();
+const createCompanyController = new CreateCompanyController_1.CreateCompanyController();
+const updateCompanyController = new UpdateCompanyController_1.UpdateCompanyController();
+const listCompanyController = new ListCompanyController_1.ListCompanyController();
+const companyRoutes = (0, express_1.Router)();
+exports.companyRoutes = companyRoutes;
+companyRoutes.get("/:id", readCompanyController.handle);
+companyRoutes.propfind("/list", listCompanyController.handle);
+companyRoutes.post("/", createCompanyController.handle);
+companyRoutes.patch("/:id", updateCompanyController.handle);

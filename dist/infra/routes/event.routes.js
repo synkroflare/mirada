@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.eventRoutes = void 0;
+const express_1 = require("express");
+const CreateEventController_1 = require("../../server/modules/event/CreateEventController");
+const ReadEventController_1 = require("../../server/modules/event/ReadEventController");
+const UpdateEventController_1 = require("../../server/modules/event/UpdateEventController");
+const ListEventController_1 = require("../../server/modules/event/ListEventController");
+const readEventController = new ReadEventController_1.ReadEventController();
+const createEventController = new CreateEventController_1.CreateEventController();
+const updateEventController = new UpdateEventController_1.UpdateEventController();
+const listEventController = new ListEventController_1.ListEventController();
+const eventRoutes = (0, express_1.Router)();
+exports.eventRoutes = eventRoutes;
+eventRoutes.get("/:id", readEventController.handle);
+eventRoutes.propfind("/list", listEventController.handle);
+eventRoutes.post("/", createEventController.handle);
+eventRoutes.patch("/:id", updateEventController.handle);
