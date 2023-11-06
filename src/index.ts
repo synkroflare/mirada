@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 container.registerInstance<PrismaClient>("PrismaClient", prisma);
 const app = express();
 
-const allowedOrigins = ["http://localhost:3000", "https://javelyn.vercel.app"]; // Substitua pelos seus valores
+const allowedOrigins = "*"; // Substitua pelos seus valores
 const corsOptions: cors.CorsOptions = {
   origin: allowedOrigins,
   methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE", "PROPFIND"],
