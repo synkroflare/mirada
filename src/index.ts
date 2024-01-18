@@ -25,7 +25,7 @@ app.on("uncaughtException", (e) => {
 
 app.use(router);
 
-const dev = true;
+const dev = false;
 if (dev) {
   app.listen(50431, () =>
     console.log("Luneta online and using node version " + process.version)
