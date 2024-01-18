@@ -73,7 +73,8 @@ model Event {
   creatorId  Int
   clientId   Int
   title      String
-  body       String
+  briefing   String
+  copy       String
   status     EventStatus @default(THEME_APPROVAL)
   link       String?
   targetDate DateTime    @default(now())
