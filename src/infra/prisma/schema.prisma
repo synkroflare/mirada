@@ -11,68 +11,92 @@ datasource db {
 }
 
 model Company {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
 
   clients Client[]
-  events Event[]
-  users User[]
-  
-  active Boolean @default(true)
+  events  Event[]
+  users   User[]
+
+  active     Boolean   @default(true)
   inactiveAt DateTime?
-  createdAt DateTime @default(now())
+  createdAt  DateTime  @default(now())
 }
 
 model Client {
-  id Int @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   companyId Int
-  name String
-  
+  name      String
+
   company Company @relation(fields: [companyId], references: [id])
-  events Event[]
-  users  User[]
-  
-  active Boolean @default(true)
+  events  Event[]
+  users   User[]
+
+  active     Boolean   @default(true)
   inactiveAt DateTime?
-  createdAt DateTime @default(now())
+  createdAt  DateTime  @default(now())
 }
 
 model User {
-  @@unique([username,password])
-  id Int @id @default(autoincrement())
-  companyId Int
-  clientId Int?
-  name String
-  username String
-  password String
+  id         Int    @id @default(autoincrement())
+  companyId  Int
+  clientId   Int?
+  name       String
+  username   String
+  password   String
   permission String
-  
+
   company Company @relation(fields: [companyId], references: [id])
-  client Client? @relation(fields: [clientId], references: [id])
-  events Event[]
-  
-  active Boolean @default(true)
+  client  Client? @relation(fields: [clientId], references: [id])
+  events  Event[]
+
+  active     Boolean   @default(true)
   inactiveAt DateTime?
-  createdAt DateTime @default(now())
+  createdAt  DateTime  @default(now())
+
+  @@unique([username, password])
+}
+
+enum EventStatus {
+  THEME_APPROVAL
+  IN_PRODUCTION
+  UNDER_CHANGE
+  CREATIVE_APPROVAL
+  AWAITING_CLIENT
+  PROGRAMED
+  CANCELED
 }
 
 model Event {
-  id Int @id @default(autoincrement())
-  companyId Int
-  creatorId Int
-  clientId Int
-  title String
-  body String
-  status String @default("INDEFINIDO")
-  link String?
-  targetDate DateTime @default(now())
+  id         Int         @id @default(autoincrement())
+  companyId  Int
+  creatorId  Int
+  clientId   Int
+  title      String
+  body       String
+  status     EventStatus @default(THEME_APPROVAL)
+  link       String?
+  targetDate DateTime    @default(now())
 
-  company Company @relation(fields: [companyId], references: [id])
-  client Client @relation(fields: [clientId], references: [id])
-  creator User @relation(fields: [creatorId], references: [id])
+  company   Company    @relation(fields: [companyId], references: [id])
+  client    Client     @relation(fields: [clientId], references: [id])
+  creator   User       @relation(fields: [creatorId], references: [id])
+  materials Material[]
 
-  active Boolean @default(true)
+  active     Boolean   @default(true)
   inactiveAt DateTime?
-  createdAt DateTime @default(now())
-  
+  createdAt  DateTime  @default(now())
+}
+
+model Material {
+  id      Int    @id @default(autoincrement())
+  eventId Int
+  url     String
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  active     Boolean   @default(true)
+  inactiveAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt()
 }

@@ -25,10 +25,10 @@ app.on("uncaughtException", (e) => {
 
 app.use(router);
 
-const dev = false;
+const dev = true;
 if (dev) {
   app.listen(50431, () =>
-    console.log("ACRAPP online and using node version " + process.version)
+    console.log("Luneta online and using node version " + process.version)
   );
 } else {
   const options = {
